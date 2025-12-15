@@ -1,8 +1,18 @@
+import prismaClient from "@/lib/client"
+import { signInCheck } from "@/utils/schema"
 import { NextApiRequest } from "next"
 import { NextResponse } from "next/server"
 
-export async function GET(req:NextApiRequest) {
-    console.log(req)
+export async function POST(req:NextApiRequest) {
+    const parseData = signInCheck.safeParse(req.body);
 
-    return NextResponse.json({message:"working"})
+    if(!parseData.success){
+        NextResponse.json({message:"pls send valid data"})
+    }
+
+   
+
+    
+
+    return NextResponse.json({message:"new user created "})
 }
