@@ -183,7 +183,7 @@ export type LinkGroupByOutputType = {
   id: number
   shortUrl: string
   url: string
-  userId: string
+  userId: string | null
   createdAt: Date
   _count: LinkCountAggregateOutputType | null
   _avg: LinkAvgAggregateOutputType | null
@@ -214,16 +214,16 @@ export type LinkWhereInput = {
   id?: Prisma.IntFilter<"Link"> | number
   shortUrl?: Prisma.StringFilter<"Link"> | string
   url?: Prisma.StringFilter<"Link"> | string
-  userId?: Prisma.StringFilter<"Link"> | string
+  userId?: Prisma.StringNullableFilter<"Link"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Link"> | Date | string
-  userRel?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  userRel?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type LinkOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   shortUrl?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   userRel?: Prisma.UserOrderByWithRelationInput
 }
@@ -235,16 +235,16 @@ export type LinkWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.LinkWhereInput[]
   NOT?: Prisma.LinkWhereInput | Prisma.LinkWhereInput[]
   url?: Prisma.StringFilter<"Link"> | string
-  userId?: Prisma.StringFilter<"Link"> | string
+  userId?: Prisma.StringNullableFilter<"Link"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Link"> | Date | string
-  userRel?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  userRel?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "shortUrl">
 
 export type LinkOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   shortUrl?: Prisma.SortOrder
   url?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.LinkCountOrderByAggregateInput
   _avg?: Prisma.LinkAvgOrderByAggregateInput
@@ -260,7 +260,7 @@ export type LinkScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Link"> | number
   shortUrl?: Prisma.StringWithAggregatesFilter<"Link"> | string
   url?: Prisma.StringWithAggregatesFilter<"Link"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"Link"> | string
+  userId?: Prisma.StringNullableWithAggregatesFilter<"Link"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Link"> | Date | string
 }
 
@@ -268,14 +268,14 @@ export type LinkCreateInput = {
   shortUrl: string
   url: string
   createdAt?: Date | string
-  userRel: Prisma.UserCreateNestedOneWithoutLinksInput
+  userRel?: Prisma.UserCreateNestedOneWithoutLinksInput
 }
 
 export type LinkUncheckedCreateInput = {
   id?: number
   shortUrl: string
   url: string
-  userId: string
+  userId?: string | null
   createdAt?: Date | string
 }
 
@@ -283,14 +283,14 @@ export type LinkUpdateInput = {
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  userRel?: Prisma.UserUpdateOneRequiredWithoutLinksNestedInput
+  userRel?: Prisma.UserUpdateOneWithoutLinksNestedInput
 }
 
 export type LinkUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -298,7 +298,7 @@ export type LinkCreateManyInput = {
   id?: number
   shortUrl: string
   url: string
-  userId: string
+  userId?: string | null
   createdAt?: Date | string
 }
 
@@ -312,7 +312,7 @@ export type LinkUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   shortUrl?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -408,6 +408,10 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type LinkCreateWithoutUserRelInput = {
   shortUrl: string
   url: string
@@ -454,7 +458,7 @@ export type LinkScalarWhereInput = {
   id?: Prisma.IntFilter<"Link"> | number
   shortUrl?: Prisma.StringFilter<"Link"> | string
   url?: Prisma.StringFilter<"Link"> | string
-  userId?: Prisma.StringFilter<"Link"> | string
+  userId?: Prisma.StringNullableFilter<"Link"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Link"> | Date | string
 }
 
@@ -493,7 +497,7 @@ export type LinkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   url?: boolean
   userId?: boolean
   createdAt?: boolean
-  userRel?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userRel?: boolean | Prisma.Link$userRelArgs<ExtArgs>
 }, ExtArgs["result"]["link"]>
 
 export type LinkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -502,7 +506,7 @@ export type LinkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   url?: boolean
   userId?: boolean
   createdAt?: boolean
-  userRel?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userRel?: boolean | Prisma.Link$userRelArgs<ExtArgs>
 }, ExtArgs["result"]["link"]>
 
 export type LinkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -511,7 +515,7 @@ export type LinkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   url?: boolean
   userId?: boolean
   createdAt?: boolean
-  userRel?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userRel?: boolean | Prisma.Link$userRelArgs<ExtArgs>
 }, ExtArgs["result"]["link"]>
 
 export type LinkSelectScalar = {
@@ -524,25 +528,25 @@ export type LinkSelectScalar = {
 
 export type LinkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "shortUrl" | "url" | "userId" | "createdAt", ExtArgs["result"]["link"]>
 export type LinkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userRel?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userRel?: boolean | Prisma.Link$userRelArgs<ExtArgs>
 }
 export type LinkIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userRel?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userRel?: boolean | Prisma.Link$userRelArgs<ExtArgs>
 }
 export type LinkIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  userRel?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  userRel?: boolean | Prisma.Link$userRelArgs<ExtArgs>
 }
 
 export type $LinkPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Link"
   objects: {
-    userRel: Prisma.$UserPayload<ExtArgs>
+    userRel: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     shortUrl: string
     url: string
-    userId: string
+    userId: string | null
     createdAt: Date
   }, ExtArgs["result"]["link"]>
   composites: {}
@@ -938,7 +942,7 @@ readonly fields: LinkFieldRefs;
  */
 export interface Prisma__LinkClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  userRel<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  userRel<T extends Prisma.Link$userRelArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Link$userRelArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1366,6 +1370,25 @@ export type LinkDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Links to delete.
    */
   limit?: number
+}
+
+/**
+ * Link.userRel
+ */
+export type Link$userRelArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
