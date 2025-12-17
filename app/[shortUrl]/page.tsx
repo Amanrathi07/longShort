@@ -20,7 +20,7 @@ export default async function({params}:props){
     const url = await realUrl(shortUrl)
     if(!url) return
     return(
-        //@ts-ignore
+        //@ts-ignore        
         <ChangeUrl url={url}/>
     )
 }

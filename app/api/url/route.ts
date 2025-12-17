@@ -38,6 +38,6 @@ export async function POST(req:Request){
         }
     })
 
-    return NextResponse.json({message:"added to db ", dbResponce})
+    return NextResponse.json({message:"added to db ", shortUrl:dbResponce.shortUrl})
 
 }
