@@ -1,16 +1,26 @@
+import ChangeUrl from "@/components/ChangeUrl"
+import prismaClient from "@/lib/client"
+
 interface props{
     params:{
-        shortUrl:String
+        shortUrl:string
     }
 }
 
-async function  RealUrl() {
-    
+async function realUrl(url:string) {
+    const dbresponce = await prismaClient.link.findFirst({
+        where:{shortUrl:url}
+    })
+
+    return dbresponce?.url
 }
 
 export default async function({params}:props){
     const {shortUrl} =await params
-    console.log(shortUrl)
-    
-
+    const url = await realUrl(shortUrl)
+    if(!url) return
+    return(
+        //@ts-ignore
+        <ChangeUrl url={url}/>
+    )
 }
