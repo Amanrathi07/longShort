@@ -1,15 +1,20 @@
 "use client"
 import axios from "axios";
 import { usePathname } from "next/navigation";
-import { MouseEvent, useState } from "react";
+import {  useRef, useState } from "react";
+import QRCode from 'qrcode';
 
 export default function Home() {
   const [data,setData]= useState("");
   const [shortUrl,setShortUrl]= useState<string|null>(null)
+
+  const canvasRef = useRef(null);
+
   async function formHandeler(e:any){
     e.preventDefault()
     const dbresponce =await axios.post("/api/url",{"link":data});
     const dbSlink = dbresponce.data.shortUrl ;
+    console.log("working")
     console.log(dbSlink)
     setShortUrl(dbSlink)
   }
@@ -25,8 +30,19 @@ export default function Home() {
         {`${window.location.href}/${shortUrl}`}  <button onClick={()=>{
           navigator.clipboard.writeText(`${window.location.href}/${shortUrl}`)
         }}>copy</button>
+
+        <br />
+        <br />
+        <button onClick={()=>{
+           QRCode.toCanvas(canvasRef.current, "https://www.youtube.com/watch?v=YsB4Vhlv8ns&list=RDYsB4Vhlv8ns&start_radio=1", {
+          width: 300,
+          margin: 2
+        });
+        }}>qr generate</button>
     </div>:""}
 
+        <canvas ref={canvasRef}></canvas>
+        
     </div>
   );
 }

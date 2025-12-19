@@ -52,8 +52,10 @@ export async function POST(req: Request) {
     const allCookies =await cookies()
     const token = allCookies.get("jwt");
     
-    
-    const jwtToken = jwt.verify(token?.value,process.env.SECRET!);
+    let jwtToken
+    if(token){
+        jwtToken = jwt.verify(token?.value,process.env.SECRET!);
+    }
 
     
     
