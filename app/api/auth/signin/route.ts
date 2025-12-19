@@ -30,9 +30,11 @@ export async function POST(req:Request) {
    }
    const token = jwt_create(user.id);
    
-   if(!token) return
+   if(!token) return ;
 
-    (await cookies()).set("jwt",token)
+   
+   
+   (await cookies()).set("jwt",token)
 
     return NextResponse.json({message:"signin successful"})
     } catch (error) {

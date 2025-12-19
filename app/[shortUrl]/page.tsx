@@ -7,11 +7,20 @@ interface props{
     }
 }
 
+async function updateDb(url:string){
+    await prismaClient.link.update({
+        where:{shortUrl:url},
+        data:{click_count:{
+            increment: 1
+        }}
+    })
+}
+
 async function realUrl(url:string) {
     const dbresponce = await prismaClient.link.findFirst({
         where:{shortUrl:url}
     })
-
+    await updateDb(url)
     return dbresponce?.url
 }
 

@@ -1,6 +1,7 @@
 import prismaClient from "@/lib/client";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import  jwt  from "jsonwebtoken"
 
 const characters =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -50,13 +51,20 @@ export async function POST(req: Request) {
 
     const allCookies =await cookies()
     const token = allCookies.get("jwt");
+    
+    
+    const jwtToken = jwt.verify(token?.value,process.env.SECRET!);
 
-
-    if(token){
+    
+    
+    
+    
+    
+    if(jwtToken){
         data={
       shortUrl: shortLink,
       url: link,
-      userId: token
+      userId: jwtToken
     }
     }else{
         data= {
