@@ -1,7 +1,15 @@
 import prismaClient from "@/lib/client";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import  jwt  from "jsonwebtoken"
+import  jwt, { JwtPayload }  from "jsonwebtoken"
+
+
+interface dataProps{
+    shortUrl: string,
+    url: string,
+    userId? : string | JwtPayload
+
+}
 
 const characters =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -47,7 +55,11 @@ export async function POST(req: Request) {
         attempts++;  
         }
 
-    let data ;
+if(!shortLink)return NextResponse.json({message:"pls try afret some time"})
+
+
+
+    let data:dataProps ;
 
     const allCookies =await cookies()
     const token = allCookies.get("jwt");
@@ -63,19 +75,21 @@ export async function POST(req: Request) {
     
     
     if(jwtToken){
-        data={
+    data={
       shortUrl: shortLink,
       url: link,
       userId: jwtToken
     }
     }else{
-        data= {
+    data= {
       shortUrl: shortLink,
       url: link,
     }
     }
     
+
   const dbResponce = await prismaClient.link.create({
+    //@ts-ignore
     data:data,
   });
 
