@@ -1,43 +1,76 @@
 import prismaClient from "@/lib/client";
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
+const characters =
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-let caracter="abcdefghijklmanopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+function shortLinkGen() {
+  let shortUrl = "";
+  const charactersLength = characters.length;
 
-function shortLinkGen(){
-    let shorturl="";
-    let length = caracter.length ;
-   
+  for (let i = 0; i < 8; i++) {
+    shortUrl += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
 
-    for(let i=0;i<16;i++){
-        shorturl += caracter.at(Math.floor(Math.random()*length))
-    }
-    return shorturl;
+  return shortUrl;
 }
 
 
 
-export async function POST(req:Request){
-    const parsedLink = await req.json();
-    const {link} = parsedLink
 
-    console.log("the link from postman",link)
-    const shortLink = shortLinkGen()
+export async function POST(req: Request) {
+  const parsedLink = await req.json();
+  const { link } = parsedLink;
 
-    const existingShortUrl = await prismaClient.link.findUnique({
-        where:{shortUrl:shortLink}
-    }) 
+  if (!link || typeof link !== "string") {
+    return NextResponse.json(
+      { error: "Invalid link provided" },
+      { status: 400 }
+    );
+  }
 
-    
-    if(existingShortUrl){ return NextResponse.json({message:"pls try again"})}
+  let shortLink;
+  let attempts = 0;
+  const maxAttempts = 5;
 
-    const dbResponce = await prismaClient.link.create({
-        data:{
-            shortUrl:shortLink ,
-            url : link ,
+        while (attempts < maxAttempts) {
+          shortLink = shortLinkGen();
+          const existingUser = await prismaClient.link.findUnique({
+            where: { shortUrl: shortLink },
+          });
+
+        if(!existingUser){
+            break 
+          }
+        attempts++;  
         }
-    })
 
-    return NextResponse.json({message:"added to db ", shortUrl:dbResponce.shortUrl})
+    let data ;
 
+    const allCookies =await cookies()
+    const token = allCookies.get("jwt");
+
+
+    if(token){
+        data={
+      shortUrl: shortLink,
+      url: link,
+      userId: token
+    }
+    }else{
+        data= {
+      shortUrl: shortLink,
+      url: link,
+    }
+    }
+    
+  const dbResponce = await prismaClient.link.create({
+    data:data,
+  });
+
+  return NextResponse.json({
+    message: "added to db ",
+    shortUrl: dbResponce.shortUrl,
+  });
 }

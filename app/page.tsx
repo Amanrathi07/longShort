@@ -6,7 +6,7 @@ import { MouseEvent, useState } from "react";
 export default function Home() {
   const [data,setData]= useState("");
   const [shortUrl,setShortUrl]= useState<string|null>(null)
-  async function formHandeler(e){
+  async function formHandeler(e:any){
     e.preventDefault()
     const dbresponce =await axios.post("/api/url",{"link":data});
     const dbSlink = dbresponce.data.shortUrl ;
