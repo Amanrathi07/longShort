@@ -27,14 +27,14 @@ export default function Home() {
       <br />
       
     {shortUrl?<div>
-        {`${window.location.href}/${shortUrl}`}  <button onClick={()=>{
-          navigator.clipboard.writeText(`${window.location.href}/${shortUrl}`)
+        {`${window.location.href}${shortUrl}`}  <button onClick={()=>{
+          navigator.clipboard.writeText(`${window.location.href}${shortUrl}`)
         }}>copy</button>
 
         <br />
         <br />
         <button onClick={()=>{
-           QRCode.toCanvas(canvasRef.current, "https://www.youtube.com/watch?v=YsB4Vhlv8ns&list=RDYsB4Vhlv8ns&start_radio=1", {
+           QRCode.toCanvas(canvasRef.current, `${window.location.href}${shortUrl}`, {
           width: 300,
           margin: 2
         });
