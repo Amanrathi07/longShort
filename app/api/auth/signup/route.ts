@@ -8,6 +8,7 @@ import { NextResponse } from "next/server";
 
 
 export async function POST(req:Request){
+    console.log("get the request")
     const requestBody = await req.json()
     const parseData = signUpCheck.safeParse(requestBody);
     if(!parseData.success){
