@@ -1,15 +1,38 @@
 "use client"
 
-import { useContext, useEffect, useState } from "react"
+import axios from "axios";
+import { createContext, useContext, useEffect, useState } from "react"
 
-function AuthContext(){
+const AuthContext = createContext({
+  authUser: null,
+  sesetAuthUsertUser: (p0: null) => {},
+});
+
+export function AuthProvider({ children }: { children: React.ReactNode }){
+
     const [authUser,setAuthUser]=useState(null);
-    useEffect(()=>{
-        try {
+
+    async function checkAuth(){
+          try {
+            const apiResponce  =await axios.get("/api/auth/checkAuth") ;
+
             
+             if(apiResponce.data){
+                setAuthUser(apiResponce.data)
+    }
         } catch (error) {
             
         }
+    }
+
+    useEffect(()=>{
+      checkAuth();
     },[])
-    return
+    //@ts-ignore
+    return <AuthContext.Provider value={{ authUser,setAuthUser}}>
+      {children}
+    </AuthContext.Provider>
 }
+
+
+export const useAuth = () => useContext(AuthContext);
