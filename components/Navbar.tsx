@@ -1,12 +1,12 @@
 "use client"
-import { useAuth } from "@/context/auth";
+// import { useAuth } from "@/context/auth";
 import axios from "axios";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 
 function Navbar() {
-  const { authUser } = useAuth();
+  // const { authUser } = useAuth();
 
   async function removeCookies(){
     await  axios.post("/api/auth/checkAuth").then(()=>{
@@ -18,7 +18,7 @@ function Navbar() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <h1 className="text-xl font-bold tracking-wide">Shortify</h1>
 
-          {authUser ? (
+          {/* {authUser ? (
             <button onClick={()=>{ removeCookies()}} className="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition font-medium">signout</button>
           ) : (
             <Link
@@ -27,7 +27,7 @@ function Navbar() {
             >
               Sign In
             </Link>
-          )}
+          )} */}
         </div>
       </nav>
   )
