@@ -1,5 +1,6 @@
 import ChangeUrl from "@/components/ChangeUrl"
 import prismaClient from "@/lib/client"
+import { redirect } from "next/navigation"
 
 interface props{
     params:{
@@ -27,12 +28,8 @@ async function realUrl(url:string) {
 export default async function({params}:props){
     const {shortUrl} =await params
     const url = await realUrl(shortUrl)
-    if(!url) return
-    return(
-
-
-        //@ts-ignore        
-        // <ChangeUrl url={url}/>
-        redirect(url)
-    )
+    if(!url) return;
+    // redirect from server 
+    redirect(url)
+  
 }
