@@ -5,7 +5,8 @@ import { useState } from "react";
 
 export default function SignUp() {
      const [data , setData]=useState({name:"",email:"",password:""})
-
+  
+     //@ts-ignore
         async function formHandal(e){
             
             e.preventDefault();

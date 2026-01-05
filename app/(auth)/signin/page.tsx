@@ -6,6 +6,7 @@ import { useState } from "react";
 export default function SignIn() {
     const [data , setData]=useState({email:"",password:""})
 
+    //@ts-ignore
     async function formHandal(e){
         e.preventDefault();
         axios.post('/api/auth/signin',data,{withCredentials:true})
