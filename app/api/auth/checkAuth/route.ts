@@ -8,7 +8,6 @@ dotenv.config({
     path:"../../../../.env"
 })
 
-console.log(process.env.SECRET)
 
 export async function GET(req:Request){
     const token = (await cookies()).get("jwt") ;
@@ -18,4 +17,10 @@ export async function GET(req:Request){
         where:{id:userId as string}
     })
     return NextResponse.json({name : dbResponce?.name , email: dbResponce?.email , createdAt : dbResponce?.createdAt})
+}
+
+
+export async function POST(req:Request){
+    (await cookies()).set('jwt',"")
+    return NextResponse.json({message : "it working"})
 }

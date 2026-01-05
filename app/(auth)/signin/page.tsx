@@ -1,6 +1,7 @@
 "use client" ;
 import axios from "axios";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export default function SignIn() {
@@ -10,6 +11,8 @@ export default function SignIn() {
     async function formHandal(e){
         e.preventDefault();
         axios.post('/api/auth/signin',data,{withCredentials:true})
+        redirect('/')
+        
     }
 
   return (

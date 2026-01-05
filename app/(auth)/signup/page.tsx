@@ -1,6 +1,7 @@
 "use client"
 import axios from "axios";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { useState } from "react";
 
 export default function SignUp() {
@@ -11,6 +12,7 @@ export default function SignUp() {
             
             e.preventDefault();
             await axios.post('/api/auth/signup',data,{withCredentials:true})
+            redirect('/')
         }
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] p-4">
