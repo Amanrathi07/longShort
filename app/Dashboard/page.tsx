@@ -7,10 +7,9 @@ import { cookies } from "next/headers";
 import prismaClient from "@/lib/client"
 import  jwt, { JwtPayload }  from "jsonwebtoken"
 import dotenv from "dotenv" ;
-import { redirect } from "next/navigation";
 
 dotenv.config({
-    path: "../.env"
+    path: "../../.env"
 })
 
 async function checkAuth(){
@@ -26,10 +25,9 @@ async function checkAuth(){
   }
 }
 
-export default async  function Home() {
+export default async  function Dashboard() {
   
   const authUser =await checkAuth()
-  if(authUser) redirect("/Dashboard")
   return (
     <div className="min-h-screen bg-linear-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-gray-200">
       

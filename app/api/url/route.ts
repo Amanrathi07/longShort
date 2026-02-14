@@ -98,3 +98,4 @@ if(!shortLink)return NextResponse.json({message:"pls try afret some time"})
     shortUrl: dbResponce.shortUrl,
   });
 }
+

@@ -1,4 +1,3 @@
-import ChangeUrl from "@/components/ChangeUrl"
 import prismaClient from "@/lib/client"
 import { redirect } from "next/navigation"
 

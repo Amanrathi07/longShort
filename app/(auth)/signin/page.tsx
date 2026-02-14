@@ -10,9 +10,10 @@ export default function SignIn() {
     //@ts-ignore
     async function formHandal(e){
         e.preventDefault();
-        axios.post('/api/auth/signin',data,{withCredentials:true})
-        redirect('/')
-        
+        const responce =await  axios.post('/api/auth/signin',data,{withCredentials:true})
+        if (responce.data){
+         redirect("/Dashboard")
+        }
     }
 
   return (

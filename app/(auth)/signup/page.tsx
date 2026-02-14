@@ -11,8 +11,10 @@ export default function SignUp() {
         async function formHandal(e){
             
             e.preventDefault();
-            await axios.post('/api/auth/signup',data,{withCredentials:true})
-            redirect('/')
+            const responce = await axios.post('/api/auth/signup',data,{withCredentials:true})
+            if (responce.data){
+         redirect("/Dashboard")
+        }
         }
   return (
     <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] p-4">
