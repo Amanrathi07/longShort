@@ -4,6 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
+import { SocialCredentials } from "../SocialCredentials";
 
 export default function SignIn() {
     const [data , setData]=useState({email:"",password:""})
@@ -66,13 +67,8 @@ export default function SignIn() {
             </button>
           </form>
 
-           <div className="flex gap-8 items-center justify-between px-12  py-4">
-            <Button className="">
-              google
-            </Button>
-            <Button>
-              github
-            </Button>
+           <div className="flex  items-center justify-center py-4">
+            <SocialCredentials />
           </div>
 
 

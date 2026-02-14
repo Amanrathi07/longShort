@@ -1,9 +1,10 @@
 "use client"
-import { Button } from "@/components/ui/button";
 import axios from "axios";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
+import { SocialCredentials } from "../SocialCredentials";
+
 
 export default function SignUp() {
      const [data , setData]=useState({name:"",email:"",password:""})
@@ -75,13 +76,8 @@ export default function SignUp() {
               Create Account
             </button>
           </form>
-          <div className="flex gap-8 items-center justify-between px-12  py-4">
-            <Button className="">
-              google
-            </Button>
-            <Button>
-              github
-            </Button>
+          <div className="flex  items-center justify-center py-4">
+            <SocialCredentials />
           </div>
 
           <p className="mt-8 text-center text-sm text-gray-400">
