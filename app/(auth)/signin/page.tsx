@@ -1,4 +1,5 @@
 "use client" ;
+import { Button } from "@/components/ui/button";
 import axios from "axios";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -64,6 +65,16 @@ export default function SignIn() {
               Sign In
             </button>
           </form>
+
+           <div className="flex gap-8 items-center justify-between px-12  py-4">
+            <Button className="">
+              google
+            </Button>
+            <Button>
+              github
+            </Button>
+          </div>
+
 
           <p className="mt-8 text-center text-sm text-gray-400">
             Don’t have an account?{" "}
