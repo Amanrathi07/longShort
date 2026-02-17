@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { googleAuth } from "@/utils/firebase";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
@@ -15,7 +16,10 @@ export function SocialCredentials() {
   async function formHandel(){
     try {
       const data = await googleAuth()
-      console.log(data)
+      const res = await axios.post("/api/auth/googleAuth",{
+        accessToken:data?.user?.accessToken
+      }) 
+      console.log(res.data)
     } catch (error) {
       console.log(error)
     }
