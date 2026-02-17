@@ -436,10 +436,6 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type LinkCreateWithoutUserRelInput = {
   shortUrl: string
   url: string

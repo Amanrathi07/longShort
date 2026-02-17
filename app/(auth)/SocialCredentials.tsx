@@ -3,6 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { googleAuth } from "@/utils/firebase";
 import axios from "axios";
+import { linkWithCredential } from "firebase/auth";
+import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
@@ -10,6 +12,7 @@ import { FaGoogle } from "react-icons/fa";
 
 
 export function SocialCredentials() {
+  const router = useRouter()
   const [ lastMethod, setLastMethod ] = useState<null|string>();
   
 
@@ -17,8 +20,14 @@ export function SocialCredentials() {
     try {
       const data = await googleAuth()
       const res = await axios.post("/api/auth/googleAuth",{
-        accessToken:data?.user?.accessToken
+        accessToken:data?.user?.accessToken ,
+        withCredentials:true ,
       }) 
+
+      if (res.data){
+          router.push("/Dashboard")
+      }
+      
       console.log(res.data)
     } catch (error) {
       console.log(error)
